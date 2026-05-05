@@ -32,3 +32,12 @@ This project aims to develop an AI model capable of identifying fraudulent credi
 # Key Insights So Far
 - **Data Imbalance**: Only 0.17% of transactions are fraudulent, requiring specific evaluation metrics like Recall and Precision.
 - **Feature Engineering**: Applied **RobustScaler** to 'Time' and 'Amount' features to handle outliers and align them with PCA-transformed variables (V1-V28).
+
+## 📊 Dataset
+The dataset used in this project contains transactions made by credit cards in September 2013 by European cardholders. 
+Due to its size (143MB), the CSV file is not included in this repository.
+
+You can download the dataset directly from Kaggle:
+[Credit Card Fraud Detection Dataset](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
+
+**Note:** After downloading, place the `creditcard.csv` file inside the `data/` folder.
