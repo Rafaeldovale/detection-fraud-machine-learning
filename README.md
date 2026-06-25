@@ -10,6 +10,24 @@
 * [Dataset Information](#-dataset)
 
 ---
+detection-fraud-machine-learning/
+│
+├── data/                  # NUNCA envie dados brutos ao GitHub! Guarde-os localmente aqui.
+│   ├── raw/               # Dados originais (ex: o CSV do Kaggle)
+│   └── processed/         # Dados limpos ou transformados
+│
+├── notebooks/             # Guarde o seu notebook atual aqui dentro para histórico
+│   └── analise_fraude.ipynb
+│
+├── src/                   # Todo o código Python reutilizável da sua aplicação
+│   ├── __init__.py
+│   ├── preprocess.py      # Funções de limpeza e transformação de dados
+│   └── train.py           # Código para treinar e salvar o modelo
+│
+├── models/                # Onde salvaremos o modelo treinado (ex: modelo.pkl)
+│
+├── .gitignore             # Arquivo para dizer ao Git o que NÃO subir
+└── README.md
 
 ## 📌 Project Overview
 This project aims to develop an AI model capable of identifying fraudulent credit card transactions. Using a real dataset (Kaggle), the main challenge is dealing with **extreme data imbalance**, where frauds represent a tiny fraction of total transactions.

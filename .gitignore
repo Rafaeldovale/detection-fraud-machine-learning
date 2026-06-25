@@ -220,3 +220,8 @@ __marimo__/
 # Project data
 data/
 *.csv
+
+# Project models (MLOps)
+models/
+*.pkl
+*.joblib
