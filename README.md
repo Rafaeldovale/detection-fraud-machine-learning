@@ -10,27 +10,26 @@
 * [Dataset Information](#-dataset)
 
 ---
-```
+```text
 detection-fraud-machine-learning/
-│
-├── data/                
-│   ├── raw/               
-│   └── processed/         
-│
-├── notebooks/             
-│   └── analise_fraude.ipynb
-│
-├── src/                   
-│   ├── __init__.py
-│   ├── preprocess.py      
-│   └── train.py           
-│
-├── models/               
-│
-├── .gitignore             
+├── api/                   # FastAPI application layer
+│   ├── main.py            # API routing and model inference logic
+│   └── schemas.py         # Data validation contracts (Pydantic)
+├── data/                  # Data directory (tracked by DVC)
+│   ├── raw/               # creditcard.csv (Kaggle source dataset)
+│   └── processed/
+├── models/                # Trained model artifacts (tracked by DVC)
+│   ├── logistic_regression_model.joblib
+│   ├── random_forest_model.joblib
+│   └── robust_scaler.joblib
+├── notebooks/             # Exploratory Data Analysis & experiments
+├── src/                   # Automation scripts
+│   └── train.py           # Standardized model training & export script
+├── Dockerfile             # Production Ubuntu-based container recipe
+├── requirements.txt       # Pinned production dependencies
 └── README.md
-
 ```
+
 ## 📌 Project Overview
 This project aims to develop an AI model capable of identifying fraudulent credit card transactions. Using a real dataset (Kaggle), the main challenge is dealing with **extreme data imbalance**, where frauds represent a tiny fraction of total transactions.
 
@@ -54,6 +53,11 @@ Developing a fraud detection model requires a strategic approach to data prepara
 - [x] Pre-processing & Cleaning
 - [x] Model Training
 - [x] Results Evaluation
+- [x] RestApi
+- [x] Docker
+- []  Dvc
+- []  Mflow
+
 
 ## 🏆 Model Evaluation & Final Selection
 The project compared a linear baseline with a complex ensemble method. **Logistic Regression** emerged as the most effective model.
@@ -88,3 +92,34 @@ The dataset contains transactions made by European cardholders in September 2013
 [Download Dataset from Kaggle](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
 
 **Note:** Place the `creditcard.csv` file inside the `data/` folder after downloading.
+
+## 🛠️ How to Run the API Locally
+
+1. **Activate your virtual environment:**
+   ```bash
+   source .venv_wsl/bin/activate
+   ```
+
+2. **Start the Uvicorn server:**
+   ```bash
+   uvicorn api.main:app --reload
+   ```
+
+3. **Access Interactive Documentation:**
+   Open your browser and navigate to `http://127.0.0` to test the `/predict` endpoint via Swagger UI.
+
+## 🐳 How to Run with Docker
+
+This project features a custom Ubuntu-based Dockerfile engineered to run smoothly on CPUs without AVX instructions by skipping heavy on-the-fly compilation.
+
+1. **Build the Docker Image:**
+   ```bash
+   docker build -t fraud-api .
+   ```
+
+2. **Run the Container (Port Forwarding 8000):**
+   ```bash
+   docker run -d -p 8000:8000 --name meu-antifraude fraud-api
+   ```
+
+3. **Verify Status:**
