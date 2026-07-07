@@ -8,8 +8,11 @@
 * [Model Evaluation & Selection](#-model-evaluation--final-selection)
 * [Exploratory Data Analysis (EDA)](#-exploratory-data-analysis-eda)
 * [Dataset Information](#-dataset)
+* [How to Run the API Locally](#️-how-to-run-the-api-locally)
+* [How to Run with Docker](#-how-to-run-with-docker)
 
 ---
+
 ```text
 detection-fraud-machine-learning/
 ├── api/                   # FastAPI application layer
@@ -34,10 +37,11 @@ detection-fraud-machine-learning/
 This project aims to develop an AI model capable of identifying fraudulent credit card transactions. Using a real dataset (Kaggle), the main challenge is dealing with **extreme data imbalance**, where frauds represent a tiny fraction of total transactions.
 
 ## 🛠️ Technologies & Tools
-* **Language:** Python 3.11
+* **Language:** Python 3.12
 * **Libraries:** Pandas, NumPy, Scikit-Learn, Matplotlib, Seaborn
-* **Algorithms:** XGBoost, Random Forest, Logistic Regression
-* **Version Control:** Git & GitHub
+* **Algorithms:** Random Forest, Logistic Regression
+* **Version Control:** Git, GitHub & DVC
+* **Containerization:** Docker Desktop & WSL2 (Ubuntu 24.04)
 
 ## 🛠️ Technical Challenges & Solutions
 Developing a fraud detection model requires a strategic approach to data preparation:
@@ -53,11 +57,10 @@ Developing a fraud detection model requires a strategic approach to data prepara
 - [x] Pre-processing & Cleaning
 - [x] Model Training
 - [x] Results Evaluation
-- [x] RestApi
-- [x] Docker
-- []  Dvc
-- []  Mflow
-
+- [x] RestApi (FastAPI)
+- [x] Docker Containerization
+- [ ] DVC Data Versioning
+- [ ] MLflow Experiment Tracking
 
 ## 🏆 Model Evaluation & Final Selection
 The project compared a linear baseline with a complex ensemble method. **Logistic Regression** emerged as the most effective model.
@@ -91,9 +94,9 @@ The dataset contains transactions made by European cardholders in September 2013
 
 [Download Dataset from Kaggle](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
 
-**Note:** Place the `creditcard.csv` file inside the `data/` folder after downloading.
+**Note:** Place the `creditcard.csv` file inside the `data/raw/` folder after downloading.
 
-## 🛠️ How to Run the API Locally
+## ️⚙️ How to Run the API Locally
 
 1. **Activate your virtual environment:**
    ```bash
@@ -119,7 +122,8 @@ This project features a custom Ubuntu-based Dockerfile engineered to run smoothl
 
 2. **Run the Container (Port Forwarding 8000):**
    ```bash
-   docker run -d -p 8000:8000 --name meu-antifraude fraud-api
+   docker run -d -p 8000:8000 --name fraud-detection-service fraud-api
    ```
 
 3. **Verify Status:**
+   Check your Docker Desktop application or visit `http://127.0.0` to execute real-time fraud scoring inside the container.
