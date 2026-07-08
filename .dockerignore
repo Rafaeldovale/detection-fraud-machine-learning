@@ -1,0 +1,9 @@
+.venv_wsl/
+.git/
+.dvc/
+notebooks/
+data/raw/creditcard.csv
+test_debug.py
+.gitignore
+.dvcignore
+README.md
