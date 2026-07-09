@@ -22,3 +22,8 @@ models/*.pkl
 
 # Python extensions
 *.so
+
+# MLflow local database
+mlflow.db
+mlflow/
+ml_runs/
