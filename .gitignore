@@ -22,4 +22,3 @@ models/*.pkl
 
 # Python extensions
 *.so
-/models

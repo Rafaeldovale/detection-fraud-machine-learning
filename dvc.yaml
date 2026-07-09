@@ -1,0 +1,14 @@
+stages:
+  train_model:
+    cmd: python src/train.py
+    deps:
+      - src/train.py
+      - data/raw/creditcard.csv
+    params:
+      - train.test_size
+      - train.random_state
+    outs:
+      - models/robust_scaler.joblib
+      - models/logistic_regression_model.joblib
+      - models/random_forest_model.joblib
+

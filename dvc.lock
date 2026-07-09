@@ -1,0 +1,35 @@
+schema: '2.0'
+stages:
+  train_model:
+    cmd: python src/train.py
+    deps:
+    - path: data/raw/creditcard.csv
+      hash: md5
+      md5: e90efcb83d69faf99fcab8b0255024de
+      size: 150828752
+      isexec: true
+    - path: src/train.py
+      hash: md5
+      md5: 5fc3da78b6ea32a3cfc82abc826bf326
+      size: 1855
+      isexec: true
+    params:
+      params.yaml:
+        train.random_state: 42
+        train.test_size: 0.2
+    outs:
+    - path: models/logistic_regression_model.joblib
+      hash: md5
+      md5: acf4c4fab514ae60f153826191bec698
+      size: 1103
+      isexec: true
+    - path: models/random_forest_model.joblib
+      hash: md5
+      md5: b8595cbb7f7f8b371b4a5f8b1b39d15b
+      size: 2596681
+      isexec: true
+    - path: models/robust_scaler.joblib
+      hash: md5
+      md5: ce58cd507794e3007bb3903ab3b955b3
+      size: 983
+      isexec: true
