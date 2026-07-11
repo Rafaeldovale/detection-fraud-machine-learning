@@ -3,16 +3,16 @@ services:
   postgres:
     image: postgres:15-alpine
     environment:
-      - POSTGRES_USER=${AIRFLOW_DB_USER}
-      - POSTGRES_PASSWORD=${AIRFLOW_DB_PASSWORD}
-      - POSTGRES_DB=${AIRFLOW_DB_NAME}
+      - POSTGRES_USER=airflow_user
+      - POSTGRES_PASSWORD=AirflowSecurePassword2026!
+      - POSTGRES_DB=airflow_db
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${AIRFLOW_DB_USER}"]
-      interval: 10s
+      test: ["CMD-SHELL", "pg_isready -U airflow_user -d airflow_db"]
+      interval: 5s
       timeout: 5s
       retries: 5
 
@@ -25,7 +25,7 @@ services:
         condition: service_healthy
     environment:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${AIRFLOW_DB_USER}:${AIRFLOW_DB_PASSWORD}@postgres:5432/${AIRFLOW_DB_NAME}
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow_user:AirflowSecurePassword2026!@postgres:5432/airflow_db
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
     volumes:
       - ./airflow/dags:/opt/airflow/dags
@@ -33,7 +33,7 @@ services:
       - ./airflow/plugins:/opt/airflow/plugins
     ports:
       - "8080:8080"
-    command: bash -c "airflow db migrate && airflow users create --username admin --firstname Fael --lastname Senior --role Admin --email admin@example.com --password admin && airflow webserver"
+    command: bash -c "airflow db init && airflow users create --username admin --firstname Fael --lastname Senior --role Admin --email admin@example.com --password admin && airflow webserver"
 
   # 3. Agendador do Airflow (O coração que vigia o relógio)
   airflow-scheduler:
@@ -44,7 +44,7 @@ services:
         condition: service_healthy
     environment:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${AIRFLOW_DB_USER}:${AIRFLOW_DB_PASSWORD}@postgres:5432/${AIRFLOW_DB_NAME}
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow_user:AirflowSecurePassword2026!@postgres:5432/airflow_db
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
     volumes:
       - ./airflow/dags:/opt/airflow/dags
