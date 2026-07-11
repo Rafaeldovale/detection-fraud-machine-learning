@@ -27,3 +27,11 @@ models/*.pkl
 mlflow.db
 mlflow/
 ml_runs/
+
+# Apache Airflow execution logs and local configs
+airflow/logs/
+airflow/airflow.cfg
+airflow/airflow.db
+
+# Security variables
+.env
