@@ -10,11 +10,17 @@
 * [Dataset Information](#-dataset)
 * [How to Run the API Locally](#️-how-to-run-the-api-locally)
 * [How to Run with Docker](#-how-to-run-with-docker)
+* [MLflow Experiment Tracking](#-mlflow-experiment-tracking)
+* [Apache Airflow Orchestration](#-apache-airflow-orchestration)
 
 ---
 
 ```text
 detection-fraud-machine-learning/
+├── airflow/               # Apache Airflow core components
+│   ├── dags/              # Automated orchestration scripts (DAGs)
+│   ├── logs/              # Local execution history logs (Git-ignored)
+│   └── plugins/
 ├── api/                   # FastAPI application layer
 │   ├── main.py            # API routing and model inference logic
 │   └── schemas.py         # Data validation contracts (Pydantic)
@@ -28,7 +34,14 @@ detection-fraud-machine-learning/
 ├── notebooks/             # Exploratory Data Analysis & experiments
 ├── src/                   # Automation scripts
 │   └── train.py           # Standardized model training & export script
+├── .dockerignore          # Optimization build rules for container images
+├── .env                   # Secure production environment variables (Git-ignored)
+├── .gitignore             # Strict version control filter profile
 ├── Dockerfile             # Production Ubuntu-based container recipe
+├── docker-compose.yaml    # Multi-container orchestration specification
+├── dvc.yaml               # Directed Acyclic Graph (DAG) recipe for data/models
+├── dvc.lock               # Deterministic pipeline execution tracking lockfile
+├── params.yaml            # Standardized model and preprocessing hyperparameters
 ├── requirements.txt       # Pinned production dependencies
 └── README.md
 ```
@@ -42,6 +55,8 @@ This project aims to develop an AI model capable of identifying fraudulent credi
 * **Algorithms:** Random Forest, Logistic Regression
 * **Version Control:** Git, GitHub & DVC
 * **Containerization:** Docker Desktop & WSL2 (Ubuntu 24.04)
+* **Experiment Tracking:** MLflow
+* **Workflow Orchestration:** Apache Airflow
 
 ## 🛠️ Technical Challenges & Solutions
 Developing a fraud detection model requires a strategic approach to data preparation:
@@ -59,8 +74,9 @@ Developing a fraud detection model requires a strategic approach to data prepara
 - [x] Results Evaluation
 - [x] RestApi (FastAPI)
 - [x] Docker Containerization
-- [ ] DVC Data Versioning
-- [ ] MLflow Experiment Tracking
+- [x] DVC Data Versioning (Hyperparameters in `params.yaml`)
+- [x] MLflow Experiment Tracking (Dual-Run Matrix Comparison)
+- [ ] Apache Airflow Production DAG Automations
 
 ## 🏆 Model Evaluation & Final Selection
 The project compared a linear baseline with a complex ensemble method. **Logistic Regression** emerged as the most effective model.
@@ -127,3 +143,25 @@ This project features a custom Ubuntu-based Dockerfile engineered to run smoothl
 
 3. **Verify Status:**
    Check your Docker Desktop application or visit `http://127.0.0` to execute real-time fraud scoring inside the container.
+
+## 📉 MLflow Experiment Tracking
+
+To launch the decoupled, resource-efficient local tracking dashboard server on the Windows host machine:
+
+1. **Start MLflow Server (Windows Command Prompt):**
+   ```cmd
+   py -m mlflow server --backend-store-uri sqlite:///mlflow.db --host 0.0.0.0 --port 5000
+   ```
+2. **Access Dashboard:**
+   Open `http://127.0.0.1:5000` to review runs, parameters (`max_iter`), model tracking artifacts, and metrics comparisons.
+
+## 🌪️ Apache Airflow Orchestration
+
+The full MLOps automation loop is orchestrated inside sandboxed isolated environments using Docker Compose containers:
+
+1. **Provision Environment Infrastructure:**
+   ```bash
+   docker compose down -v && docker compose up -d
+   ```
+2. **Access Operations Dashboard:**
+   Open `http://127.0.0.1:8082` inside your browser and authenticate using the configuration deployment user credentials (`admin` / `admin`).
