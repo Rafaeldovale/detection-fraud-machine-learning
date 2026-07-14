@@ -12,8 +12,9 @@ from sklearn.metrics import recall_score, precision_score
 def main():
     # 1. Connect the script to the light MLflow server running on your Windows host
     # WSL2 looks at the host machine via 127.0.0.1 or host.docker.internal
-    mlflow.set_tracking_uri("http://172.22.16.1:5000")
+    #mlflow.set_tracking_uri("http://172.22.16.1:5000")
     mlflow.set_experiment("Credit_Card_Fraud_Detection")
+    mlflow.set_tracking_uri("http://docker.internal")
     
     # Start an MLflow run to log everything automatically
     with mlflow.start_run(run_name="Hyperparameter_Tuning_Run"):

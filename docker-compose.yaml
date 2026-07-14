@@ -32,7 +32,7 @@ services:
       - ./airflow/logs:/opt/airflow/logs
       - ./airflow/plugins:/opt/airflow/plugins
     ports:
-      - "8080:8080"
+      - "8082:8080"
     command: bash -c "airflow db init && airflow users create --username admin --firstname Fael --lastname Senior --role Admin --email admin@example.com --password admin && airflow webserver"
 
   # 3. Agendador do Airflow (O coração que vigia o relógio)
